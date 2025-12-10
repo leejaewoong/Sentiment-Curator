@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(python -m venv:*)",
+      "Bash(./venv/Scripts/pip install:*)",
+      "Bash(./venv/Scripts/python:*)",
+      "Bash(./venv/Scripts/playwright:*)",
+      "Bash(npm install)",
+      "WebFetch(domain:v0.app)",
+      "Bash(npx shadcn@latest init:*)",
+      "Bash(npx shadcn@latest add button card separator scroll-area)",
+      "Bash(curl:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
