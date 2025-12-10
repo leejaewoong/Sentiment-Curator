@@ -1,65 +1,45 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Home, Settings, BarChart3, Play } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Home, Settings, LayoutDashboard, BarChart3 } from "lucide-react"
+import { cn } from "@/lib/utils"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-const navigation = [
-  { name: "Home", href: "/", icon: Home },
-  { name: "Configuration", href: "/config", icon: Settings },
-  { name: "Dashboard", href: "/dashboard", icon: BarChart3 },
-];
+const navItems = [
+  { icon: Home, label: "Home", href: "/" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+  { icon: BarChart3, label: "Statistics", href: "/statistics" },
+  { icon: Settings, label: "Config", href: "/config" },
+]
 
 export function Sidebar() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
-    <div className="flex h-screen w-16 flex-col border-r bg-background">
-      {/* Logo/Brand */}
-      <div className="flex h-14 items-center justify-center border-b">
-        <div className="flex h-8 w-8 items-center justify-center rounded bg-primary text-primary-foreground font-bold text-sm">
-          SC
-        </div>
+    <div className="flex w-16 flex-col items-center border-r border-border bg-sidebar py-4">
+      <div className="mb-8 flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-mono font-semibold text-sm">
+        SC
       </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 space-y-1 p-2">
-        {navigation.map((item) => {
-          const isActive = pathname === item.href;
+      <nav className="flex flex-1 flex-col gap-2">
+        {navItems.map((item) => {
+          const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
           return (
-            <Link key={item.name} href={item.href}>
-              <Button
-                variant={isActive ? "secondary" : "ghost"}
-                size="icon"
-                className={cn(
-                  "w-full h-12",
-                  isActive && "bg-secondary"
-                )}
-                title={item.name}
-              >
-                <item.icon className="h-5 w-5" />
-              </Button>
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex h-12 w-12 items-center justify-center rounded-lg transition-colors",
+                isActive
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                  : "text-sidebar-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground",
+              )}
+              title={item.label}
+            >
+              <item.icon className="h-5 w-5" />
             </Link>
-          );
+          )
         })}
       </nav>
-
-      <Separator />
-
-      {/* Bottom Actions */}
-      <div className="p-2 space-y-1">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="w-full h-12"
-          title="Run Crawler"
-        >
-          <Play className="h-5 w-5" />
-        </Button>
-      </div>
     </div>
-  );
+  )
 }
