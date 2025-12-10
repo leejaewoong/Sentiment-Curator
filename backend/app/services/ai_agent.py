@@ -4,7 +4,13 @@ import json
 
 class AIAgent:
     def __init__(self):
-        self.client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+        self._client = None
+        
+    @property
+    def client(self):
+        if not self._client:
+            self._client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+        return self._client
         
     async def filter_and_summarize(self, posts: list[dict], prompt: str):
         """
@@ -38,7 +44,7 @@ class AIAgent:
         
         try:
             response = await self.client.chat.completions.create(
-                model="gpt-4o-mini",
+                model=settings.OPENAI_MODEL,
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": posts_text}
