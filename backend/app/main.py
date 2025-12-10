@@ -1,29 +1,36 @@
+"""
+FastAPI Application Entry Point
+"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.api.endpoints import config, crawler, posts
 from app.core.database import engine, Base
-from app.models import post, config
-from app.api.api import api_router
 
-# Create Tables
+# Create database tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Sentiment Curator API")
+app = FastAPI(
+    title="Sentiment Curator API",
+    description="AI-powered content curation and filtering service",
+    version="1.0.0"
+)
 
-# CORS Setup
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000"],  # Frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(api_router, prefix="/api")
+# Include routers
+app.include_router(config.router, prefix="/api/config", tags=["config"])
+app.include_router(crawler.router, prefix="/api/crawler", tags=["crawler"])
+app.include_router(posts.router, prefix="/api/posts", tags=["posts"])
+
 
 @app.get("/")
-def read_root():
-    return {"message": "Sentiment Curator API is running"}
-
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
+async def root():
+    """Health check endpoint"""
+    return {"status": "healthy", "service": "Sentiment Curator API"}

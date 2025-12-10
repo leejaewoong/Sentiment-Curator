@@ -1,0 +1,1 @@
+# Sentiment Curator Backend Application
