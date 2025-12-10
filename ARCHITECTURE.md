@@ -38,21 +38,25 @@ graph TD
 ```
 sentiment-curator/
 ├── frontend/          # Next.js Application
-│   ├── app/           # App Router Pages
-│   ├── components/    # UI Components (Shadcn)
-│   ├── lib/           # Utils
-│   └── public/        # Static Assets
+│   ├── src/
+│   │   ├── app/           # App Router Pages (dashboard, config, etc.)
+│   │   ├── components/    # UI Components (dashboard-view, etc.)
+│   │   ├── lib/           # Utils & API Client
+│   │   └── ...
+│   ├── public/
+│   └── ...
 ├── backend/           # FastAPI Application
 │   ├── app/
-│   │   ├── api/       # API Endpoints
-│   │   ├── core/      # Config & Security
-│   │   ├── models/    # DB Models
-│   │   ├── services/  # Business Logic (Crawler, AI)
+│   │   ├── api/       # API Endpoints (crawler, config, posts)
+│   │   ├── core/      # Config & Database
+│   │   ├── models/    # DB Models (Post, Config)
+│   │   ├── services/  # Business Logic (Crawler, AI Agent)
 │   │   └── main.py    # Entry Point
 │   ├── tests/         # Tests
-│   ├── .env           # Secrets (GitIgnored)
-│   └── requirements.txt
-├── data/              # SQLite DB & Logs
+│   ├── data/          # SQLite DB (sentiment.db)
+│   └── ...
+├── .env               # Secrets (GitIgnored)
+├── start_dev.ps1      # Development Start Script
 └── README.md
 ```
 

@@ -3,7 +3,7 @@
 프로젝트 `Sentiment-Curator` 구현을 위한 3가지 기술 스택 조합을 제안합니다.
 사용자분의 프로필(Python/TS 능숙, Next.js/FastAPI 기초 지식)과 프로젝트 요구사항(웹 앱, 크롤링, AI)을 고려하여 선정했습니다.
 
-## 1. Option A: Modern Standard (추천)
+## 1. Option A: Modern Standard (Selected)
 가장 현대적이고 확장성이 좋은 조합입니다. Next.js의 강력한 기능과 FastAPI의 고성능을 결합합니다.
 
 *   **Frontend:** **Next.js (App Router)** + TypeScript

@@ -25,39 +25,44 @@
 *   Node.js 18 이상
 *   Chrome 브라우저 (Playwright용)
 
-### 1. Backend 설정
+### 1. 환경 설정
 
 ```bash
+# Backend 설정
 cd backend
-
-# 가상환경 생성 및 활성화
 python -m venv venv
-# Windows
 .\venv\Scripts\activate
-# Mac/Linux
-source venv/bin/activate
-
-# 의존성 설치
 pip install -r requirements.txt
 playwright install chromium
 
-# 환경 변수 설정 (.env 파일 생성)
+# .env 파일 설정
 cp ../.env.example .env
-# .env 파일 내 OPENAI_API_KEY, SLACK_BOT_TOKEN 등을 입력하세요.
+# .env 파일 내 OPENAI_API_KEY 등을 입력하세요.
 
-# 서버 실행
-uvicorn app.main:app --reload
+# Frontend 설정
+cd ../frontend
+npm install
 ```
 
-### 2. Frontend 설정
+### 2. 실행 (One-Click)
+
+프로젝트 루트에서 제공되는 스크립트를 사용하여 백엔드와 프론트엔드를 동시에 실행할 수 있습니다.
+
+```powershell
+# Windows (PowerShell)
+.\start_dev.ps1
+```
+
+또는 각각 실행할 수도 있습니다:
 
 ```bash
+# Terminal 1 (Backend)
+cd backend
+.\venv\Scripts\activate
+uvicorn app.main:app --reload
+
+# Terminal 2 (Frontend)
 cd frontend
-
-# 의존성 설치
-npm install
-
-# 개발 서버 실행
 npm run dev
 ```
 

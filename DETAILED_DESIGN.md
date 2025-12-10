@@ -3,24 +3,18 @@
 ## 1. 컴포넌트 설계 (Frontend)
 Atomic Design 패턴을 변형하여 실용적으로 구성합니다.
 
-### 1.1 Layout Components
-*   `AppLayout`: Sidebar(Navigation) + Main Content Area
+### 1.1 Layout Components (`src/components`)
 *   `Sidebar`: Navigation Menu (Home, Config, Dashboard)
-*   `Header`: Page Title, User Profile, Global Actions
+*   `TopBar`: Page Title, Global Actions (Run Crawler)
 
-### 1.2 Common Components (UI Kit - Shadcn)
-*   `Button`, `Input`, `Card`, `Dialog`, `Toast`
-*   `CodeEditor`: 설정값 입력을 위한 Monaco Editor 래퍼
-*   `TerminalView`: 로그 출력을 위한 터미널 스타일 뷰
-
-### 1.3 Feature Components
+### 1.2 Feature Components (`src/components`)
 *   **Config:**
-    *   `ConfigForm`: 설정 입력 폼 (IDE Style)
-    *   `ScheduleSelector`: Cron 스케줄 설정 UI
+    *   `ConfigurationView`: 설정 입력 폼 및 API 연동
 *   **Dashboard:**
-    *   `TrendChart`: Recharts 기반 라인/바 차트
-    *   `PostList`: 날짜별 게시글 목록 (Tree View)
-    *   `PostDetail`: 선택된 게시글 상세 및 반응 뷰 (Markdown Viewer 포함)
+    *   `DashboardView`: 메인 대시보드 컨테이너
+    *   `PostList`: 크롤링된 게시글 목록
+    *   `PostDetail`: 게시글 상세 뷰
+    *   `StatisticsView`: 통계 뷰 (Placeholder)
 
 ## 2. API 설계 (Backend)
 
