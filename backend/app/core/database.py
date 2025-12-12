@@ -1,31 +1,47 @@
 """
-Database Configuration and Session Management
+Database configuration and session management
 """
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from app.core.config import settings
+from typing import AsyncGenerator
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
+from sqlalchemy.orm import declarative_base
 
-# Create SQLite engine
-engine = create_engine(
+from app.config import settings
+
+# Create async engine
+engine = create_async_engine(
     settings.DATABASE_URL,
-    connect_args={"check_same_thread": False}  # Required for SQLite
+    echo=settings.ENVIRONMENT == "development",
+    future=True,
 )
 
-# Create SessionLocal class
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# Create session factory
+AsyncSessionLocal = async_sessionmaker(
+    engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+    autocommit=False,
+    autoflush=False,
+)
 
-# Create Base class for models
+# Base class for models
 Base = declarative_base()
 
 
-def get_db():
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """
-    Dependency to get database session
-    Yields session and closes it after use
+    Dependency for getting async database session
+
+    Usage:
+        @app.get("/items")
+        async def get_items(db: AsyncSession = Depends(get_db)):
+            ...
     """
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
+        finally:
+            await session.close()

@@ -1,1 +1,1 @@
-# Sentiment Curator Backend Application
+"""Sentiment-Curator Backend Application"""
